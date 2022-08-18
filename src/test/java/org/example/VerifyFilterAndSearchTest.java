@@ -77,7 +77,6 @@ public class VerifyFilterAndSearchTest {
 
     }
 
-
     @Test
     public void verifySortedPrice(){
         System.setProperty(
