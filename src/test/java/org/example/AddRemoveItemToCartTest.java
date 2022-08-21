@@ -17,7 +17,7 @@ public class AddRemoveItemToCartTest {
     public void addToCard() {
         System.setProperty(
                 "webdriver.chrome.driver",
-                "D:\\Elena\\ПРОЕКТЫ\\Testowanie\\EPAM szkolenie\\FirstTest\\src\\test\\resources\\webdriver\\chromedriver.exe"
+                "src/test/resources/webdriver/chromedriver.exe"
         );
 
         WebDriver webDriver = new ChromeDriver();
