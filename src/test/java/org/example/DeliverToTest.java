@@ -29,7 +29,7 @@ public class DeliverToTest {
     public void setup() {
         System.setProperty(
                 "webdriver.chrome.driver",
-                "C:\\Users\\Yanina\\Documents\\IT\\EPAM\\Verify-Deliver-To-functionality-MyCode\\src\\test\\resources\\WebDriver\\chromedriver.exe");
+               System.getProperty("user.dir") + "\\src\\test\\resources\\WebDriver\\chromedriver.exe");
 
         webDriver = new ChromeDriver();
         webDriver.get("https://www.amazon.com/");
@@ -44,7 +44,7 @@ public class DeliverToTest {
     }
 
     @Test
-    public void verifyZipCode() {
+    public void verifyZipCodeCorrectUpdateOnChangeInDeliverToSection() {
         var zipCode = "36104";
 
         WebElement deliverTo = webDriver.findElement(By.xpath("//div/span[@id= 'nav-global-location-data-modal-action']"));
@@ -70,7 +70,7 @@ public class DeliverToTest {
     }
 
     @Test
-    public void verifyListOfCounties() {
+    public void verifyDeliverToListOfCountiesContainsPoland() {
         var countryName = "Poland";
         WebElement deliverTo = webDriver.findElement(By.xpath("//div/span[@id= 'nav-global-location-data-modal-action']"));
         deliverTo.click();
@@ -85,7 +85,7 @@ public class DeliverToTest {
     }
 
     @Test
-    public void verifyCountry() {
+    public void verifyShippingToSectionContainsDeliverToCountry() {
         var countryName = "Poland";
 
         WebElement deliverTo = webDriver.findElement(By.xpath("//div/span[@id= 'nav-global-location-data-modal-action']"));
