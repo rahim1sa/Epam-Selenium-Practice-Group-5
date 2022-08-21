@@ -27,6 +27,7 @@ public class AddRemoveItemToCartTest {
         Assert.assertTrue(categoryCompAccess.isDisplayed());
         categoryCompAccess.click();
 
+
         WebElement productMonitor = webDriver.findElement(By.xpath("//span[contains(text(),'LED Monitor')]"));
         productMonitor.click();
 
