@@ -17,10 +17,10 @@ import java.util.List;
 public class VerifyFilterAndSearchTest {
     private WebDriver webDriver;
     private WebDriverWait webDriverWait;
-    int min=0, max=0, price=0, wholePrice=0;
+    int min = 0, max = 0, price = 0, wholePrice = 0;
 
     @BeforeMethod
-    public void setup(){
+    public void setup() {
         System.setProperty(
                 "webdriver.chrome.driver",
                 "C:\\Users\\Asus\\Desktop\\Epam\\First_Selenium\\src\\test\\resources\\webdriver\\chromedriver.exe"
@@ -32,13 +32,13 @@ public class VerifyFilterAndSearchTest {
     }
 
     @AfterMethod
-    public void quite(){
+    public void quite() {
         webDriver.close();
         webDriver.quit();
     }
 
     @Test
-    public void verifyBrandName(){
+    public void verifyBrandName() {
         // redirecting category page
         webDriver.findElement(By.xpath("//*[contains(@aria-label,\"Computers & Accessories\")]")).click();
 
@@ -46,62 +46,64 @@ public class VerifyFilterAndSearchTest {
         webDriver.findElement(By.xpath("//*[@id=\"s-refinements\"]/div[5]/ul/li[1]/span/a")).click();
 
         // taking category name
-        WebElement titleApple =webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"p_89/Apple\"]/span/a/span")));
+        WebElement titleApple = webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"p_89/Apple\"]/span/a/span")));
 
         // checking filtered item names whether it's matched with category name
         List<WebElement> resultList = webDriver.findElements(By.xpath("//*[contains(@class,\"a-size-base-plus a-color-base a-text-normal\")]"));
-        for (WebElement x: resultList){
+        for (WebElement x : resultList) {
             Assert.assertTrue(x.getText().contains(titleApple.getText()));
         }
     }
 
 
-    public int findMin(String priceRange){
-        min = Integer.parseInt(priceRange.substring(1,priceRange.indexOf(" ")));
+    public int findMin(String priceRange) {
+        min = Integer.parseInt(priceRange.substring(1, priceRange.indexOf(" ")));
         return min;
     }
-    public int findMax(String priceRange){
+
+    public int findMax(String priceRange) {
         max = Integer.parseInt(priceRange.substring(priceRange.lastIndexOf("$") + 1));
         return max;
     }
+
     @Test
-    public void verifyPriceRange(){
+    public void verifyPriceRange() {
 
         // redirecting category page
         webDriver.findElement(By.xpath("//*[contains(@aria-label,\"Computers & Accessories\")]")).click();
 
         int priceRangeCount = webDriver.findElements(By.xpath("//*[@id=\"s-refinements\"]/div[12]/ul/li")).size();
 
-        for (int i=1;i <= priceRangeCount;i++){
+        for (int i = 1; i <= priceRangeCount; i++) {
+
             // taking price range
-            String priceRange = webDriver.findElement(By.xpath("//*[@id=\"s-refinements\"]/div[12]/ul/li["+ i +"]/span/a")).getText();
+            String priceRange = webDriver.findElement(By.xpath("//*[@id=\"s-refinements\"]/div[12]/ul/li[" + i + "]/span/a")).getText();
 
             // filter by price range
-            webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"s-refinements\"]/div[12]/ul/li["+ i +"]/span/a/span"))).click();
+            webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"s-refinements\"]/div[12]/ul/li[" + i + "]/span/a/span"))).click();
 
             // checking price range
             List<WebElement> resultList = webDriver.findElements(By.xpath("//*[contains(@class,\"s-result-list\")]//*[contains(@class,\"a-price-whole\")]"));
-            for (int j=0;j<resultList.size();j++){
-                if (i==1 || i==priceRangeCount)  {
+            for (int j = 0; j < resultList.size(); j++) {
+                if (i == 1 || i == priceRangeCount) {
                     price = Integer.parseInt(priceRange.replaceAll("[^\\d.]", ""));
                 }
                 wholePrice = Integer.parseInt(resultList.get(j).getText());
-                if (priceRange.contains("Under")){
-                    Assert.assertTrue(wholePrice > price,"Product-"+j+" price(" + wholePrice + ") is under "+price);
-                }else if(priceRange.contains("Above")) {
-                    Assert.assertTrue(wholePrice > price, "Product-"+j+" price(" + wholePrice + ") is under "+price);
-                }else {
+                if (priceRange.contains("Under")) {
+                    Assert.assertTrue(wholePrice > price, "Product-" + j + " price(" + wholePrice + ") is under " + price);
+                } else if (priceRange.contains("Above")) {
+                    Assert.assertTrue(wholePrice > price, "Product-" + j + " price(" + wholePrice + ") is under " + price);
+                } else {
                     Assert.assertTrue(wholePrice > findMin(priceRange) && wholePrice < findMax(priceRange)
-                            ,"Product-"+j+" price(" + wholePrice + ") is not between "+findMin(priceRange)+" and "+findMax(priceRange));
+                            , "Product-" + j + " price(" + wholePrice + ") is not between " + findMin(priceRange) + " and " + findMax(priceRange));
                 }
             }
             webDriver.navigate().back();
         }
-
     }
 
     @Test
-    public void verifySortedPrice(){
+    public void verifySortedPrice() {
 
         // redirecting category page
         webDriver.findElement(By.xpath("//*[contains(@aria-label,\"Computers & Accessories\")]")).click();
@@ -113,11 +115,11 @@ public class VerifyFilterAndSearchTest {
         // verify sorted price
         List<WebElement> resultList = webDriver.findElements(By.xpath("//*[contains(@class,\"s-result-list\")]//*[contains(@class,\"a-price-whole\")]"));
 
-        for (int i=0;i < resultList.size()-1;i++){
+        for (int i = 0; i < resultList.size() - 1; i++) {
             int currentPrice = Integer.parseInt(resultList.get(i).getText());
-            int nextPrice = Integer.parseInt(resultList.get(i+1).getText());
+            int nextPrice = Integer.parseInt(resultList.get(i + 1).getText());
 
-            Assert.assertTrue(currentPrice <= nextPrice,"unordered price-"+resultList.get(i+1).getText() );
+            Assert.assertTrue(currentPrice <= nextPrice, "unordered price-" + resultList.get(i + 1).getText());
         }
     }
 }
