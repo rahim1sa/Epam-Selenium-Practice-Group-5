@@ -1,6 +1,7 @@
 package org.example;
 
 import org.example.pageObject.pages.CategoryCompAccess;
+import org.example.pageObject.pages.ProductPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -15,11 +16,7 @@ import org.testng.annotations.Test;
 
 import java.time.Duration;
 
-public class AddRemoveItemToCartTest {
-
-    private WebDriver webDriver;
-    private WebDriverWait wait;
-
+public class AddRemoveItemToCartTest extends BaseTest {
 
     @AfterMethod
     public void finish() {
@@ -29,60 +26,52 @@ public class AddRemoveItemToCartTest {
 
     @Test
     public void addToCart() {
+//        CategoryCompAccess categoryCompAccess = new CategoryCompAccess(webDriver);
+        ProductPage productPage = new ProductPage(webDriver);
 
-        String cartAmount = CategoryCompAccess.open
-        WebElement categoryCompAccess = webDriver.findElement(By.xpath("//a[@aria-label='Computers & Accessories']"));
-        Assert.assertTrue(categoryCompAccess.isDisplayed());
-        categoryCompAccess.click();
+//        String cartAmount = categoryCompAccess
+//                .open()
+//                        .openProduct()
+//                                .addToCart()
+//                                        .closeSlideSheet()
+//                                                .takeCartAmount();
 
-        WebElement productMonitor = webDriver.findElement(By.xpath("//span[contains(text(),'LED Monitor')]"));
-        productMonitor.click();
-
-        WebElement buttonAddToCart = webDriver.findElement(By.id("add-to-cart-button"));
-        buttonAddToCart.click();
-
-        WebElement addedToCard = new WebDriverWait(webDriver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[@class='a-size-medium-plus a-color-base sw-atc-text a-text-bold']")));
-        Assert.assertTrue(addedToCard.isDisplayed());
-
-        WebElement closeSideSheet = new WebDriverWait(webDriver,Duration.ofSeconds(10))
-                .until(ExpectedConditions.visibilityOfElementLocated(By.id("attach-close_sideSheet-link")));
-        closeSideSheet.click();
-
-        WebElement cartAmount = new WebDriverWait(webDriver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.visibilityOfElementLocated(By.id("nav-cart-count")));
-
-        Assert.assertEquals("1", cartAmount.getText(), "Adding to cart failed");
+        String cartAmount = productPage
+                .open()
+                .addToCart()
+                .closeSlideSheet()
+                .takeCartAmount();
+        Assert.assertEquals("1", cartAmount, "Adding to cart failed");
     }
 
-    @Test
-    public void removeFromCart() {
-
-        WebElement categoryCompAccess = new WebDriverWait(webDriver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.visibilityOfElementLocated((By.xpath("//a[@aria-label='Computers & Accessories']"))));
-        categoryCompAccess.click();
-
-        WebElement productMonitor = webDriver.findElement(By.xpath("//span[contains(text(),'LED Monitor')]"));
-        productMonitor.click();
-
-        WebElement buttonAddToCart = webDriver.findElement(By.id("add-to-cart-button"));
-        buttonAddToCart.click();
-
-        WebElement closeSideSheet = new WebDriverWait(webDriver,Duration.ofSeconds(10))
-                .until(ExpectedConditions.visibilityOfElementLocated(By.id("attach-close_sideSheet-link")));
-        closeSideSheet.click();
-
-        WebElement cart = webDriver.findElement(By.id("nav-cart"));
-        cart.click();
-
-        WebElement cartDeleteBtn = webDriver.findElement(By.xpath("//input[@value='Delete']"));
-        cartDeleteBtn.click();
-
-        WebElement cartH1 = new WebDriverWait(webDriver,Duration.ofSeconds(10))
-                .until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//h1[@class='a-spacing-mini a-spacing-top-base']")));
-        Assert.assertEquals("Your Amazon Cart is empty.", cartH1.getText(), "Cart is not empty after product removing");
-
-        WebElement cartPrice = webDriver.findElement(By.id("sc-subtotal-amount-activecart"));
-        Assert.assertEquals(" $0.00", cartPrice.getText(), "Removing from cart failed");
-    }
+//    @Test
+//    public void removeFromCart() {
+//
+//        WebElement categoryCompAccess = new WebDriverWait(webDriver, Duration.ofSeconds(10))
+//                .until(ExpectedConditions.visibilityOfElementLocated((By.xpath("//a[@aria-label='Computers & Accessories']"))));
+//        categoryCompAccess.click();
+//
+//        WebElement productMonitor = webDriver.findElement(By.xpath("//span[contains(text(),'LED Monitor')]"));
+//        productMonitor.click();
+//
+//        WebElement buttonAddToCart = webDriver.findElement(By.id("add-to-cart-button"));
+//        buttonAddToCart.click();
+//
+//        WebElement closeSideSheet = new WebDriverWait(webDriver,Duration.ofSeconds(10))
+//                .until(ExpectedConditions.visibilityOfElementLocated(By.id("attach-close_sideSheet-link")));
+//        closeSideSheet.click();
+//
+//        WebElement cart = webDriver.findElement(By.id("nav-cart"));
+//        cart.click();
+//
+//        WebElement cartDeleteBtn = webDriver.findElement(By.xpath("//input[@value='Delete']"));
+//        cartDeleteBtn.click();
+//
+//        WebElement cartH1 = new WebDriverWait(webDriver,Duration.ofSeconds(10))
+//                .until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//h1[@class='a-spacing-mini a-spacing-top-base']")));
+//        Assert.assertEquals("Your Amazon Cart is empty.", cartH1.getText(), "Cart is not empty after product removing");
+//
+//        WebElement cartPrice = webDriver.findElement(By.id("sc-subtotal-amount-activecart"));
+//        Assert.assertEquals(" $0.00", cartPrice.getText(), "Removing from cart failed");
+//    }
 }

@@ -13,16 +13,21 @@ public class ProductPage extends BasePage {
 
     WebElement buttonAddToCart = webDriver.findElement(By.id("add-to-cart-button"));
 
-    WebElement addedToCard = new WebDriverWait(webDriver, Duration.ofSeconds(10))
-            .until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[@class='a-size-medium-plus a-color-base sw-atc-text a-text-bold']")));
-
     WebElement closeSideSheet = new WebDriverWait(webDriver,Duration.ofSeconds(10))
             .until(ExpectedConditions.visibilityOfElementLocated(By.id("attach-close_sideSheet-link")));
 
+    WebElement cartAmount = new WebDriverWait(webDriver, Duration.ofSeconds(10))
+            .until(ExpectedConditions.visibilityOfElementLocated(By.id("nav-cart-count")));
 
 
     public ProductPage (WebDriver webDriver) {
         super (webDriver);
+    }
+
+    public ProductPage open () {
+        webDriver.get("https://www.amazon.com/Sceptre-E248W-19203R-Monitor-Speakers-Metallic/dp/B0773ZY26F/ref=lp_16225007011_1_3");
+        webDriver.manage().window().maximize();
+        return this;
     }
 
     public ProductPage addToCart() {
@@ -35,5 +40,8 @@ public class ProductPage extends BasePage {
         return this;
     }
 
+    public String takeCartAmount () {
+        return cartAmount.getText();
+    }
 
 }

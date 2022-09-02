@@ -7,9 +7,6 @@ import org.openqa.selenium.WebElement;
 
 public class CategoryCompAccess extends BasePage  {
 
-    WebElement productMonitor = webDriver.findElement(By.xpath("//span[contains(text(),'LED Monitor')]"));
-
-
     public CategoryCompAccess (WebDriver webDriver) {
         super (webDriver);
     }
@@ -23,6 +20,7 @@ public class CategoryCompAccess extends BasePage  {
     public ProductPage openProduct() {
 //        String productTypeXpath = ("//span[contains(text(),'").concat(productType).concat("')]");
 //        WebElement productMonitor = webDriver.findElement(By.xpath(productTypeXpath));
+        WebElement productMonitor = webDriver.findElement(By.xpath("//span[contains(text(),'LED Monitor')]"));
         productMonitor.click();
         return new ProductPage(webDriver);
     }
