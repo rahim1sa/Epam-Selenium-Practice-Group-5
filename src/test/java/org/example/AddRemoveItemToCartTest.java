@@ -8,6 +8,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
+
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -30,7 +31,6 @@ public class AddRemoveItemToCartTest {
         webDriver.manage().window().maximize();
         wait = new WebDriverWait(webDriver, Duration.ofSeconds(10));
     }
-
     @AfterMethod
     public void finish() {
         webDriver.close();
@@ -39,6 +39,7 @@ public class AddRemoveItemToCartTest {
 
     @Test
     public void addToCart() {
+
         WebElement categoryCompAccess = webDriver.findElement(By.xpath("//a[@aria-label='Computers & Accessories']"));
         Assert.assertTrue(categoryCompAccess.isDisplayed());
         categoryCompAccess.click();
@@ -59,7 +60,8 @@ public class AddRemoveItemToCartTest {
 
         WebElement cartAmount = new WebDriverWait(webDriver, Duration.ofSeconds(10))
                 .until(ExpectedConditions.visibilityOfElementLocated(By.id("nav-cart-count")));
-        Assert.assertEquals("1", cartAmount.getText());
+
+        Assert.assertEquals("1", cartAmount.getText(), "Adding to cart failed");
     }
 
     @Test
@@ -87,9 +89,9 @@ public class AddRemoveItemToCartTest {
 
         WebElement cartH1 = new WebDriverWait(webDriver,Duration.ofSeconds(10))
                 .until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//h1[@class='a-spacing-mini a-spacing-top-base']")));
-        Assert.assertEquals("Your Amazon Cart is empty.", cartH1.getText());
+        Assert.assertEquals("Your Amazon Cart is empty.", cartH1.getText(), "Cart is not empty after product removing");
 
         WebElement cartPrice = webDriver.findElement(By.id("sc-subtotal-amount-activecart"));
-        Assert.assertEquals(" $0.00", cartPrice.getText());
+        Assert.assertEquals(" $0.00", cartPrice.getText(), "Removing from cart failed");
     }
 }
