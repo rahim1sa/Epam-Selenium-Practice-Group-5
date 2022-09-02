@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.pageObject.pages.CategoryCompAccess;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -19,18 +20,7 @@ public class AddRemoveItemToCartTest {
     private WebDriver webDriver;
     private WebDriverWait wait;
 
-    @BeforeMethod
-    public void setup() {
-        System.setProperty(
-                "webdriver.chrome.driver",
-                "src/test/resources/webdriver/chromedriver.exe"
-        );
 
-        this.webDriver = new ChromeDriver();
-        webDriver.get("https://www.amazon.com/");
-        webDriver.manage().window().maximize();
-        wait = new WebDriverWait(webDriver, Duration.ofSeconds(10));
-    }
     @AfterMethod
     public void finish() {
         webDriver.close();
@@ -40,6 +30,7 @@ public class AddRemoveItemToCartTest {
     @Test
     public void addToCart() {
 
+        String cartAmount = CategoryCompAccess.open
         WebElement categoryCompAccess = webDriver.findElement(By.xpath("//a[@aria-label='Computers & Accessories']"));
         Assert.assertTrue(categoryCompAccess.isDisplayed());
         categoryCompAccess.click();
