@@ -4,6 +4,7 @@ import org.example.pageObject.BasePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -11,14 +12,23 @@ import java.time.Duration;
 
 public class ProductPage extends BasePage {
 
-    WebElement buttonAddToCart = webDriver.findElement(By.id("add-to-cart-button"));
+    @FindBy(id="add-to-cart-button")
+    private WebElement buttonAddToCart;
 
-    WebElement closeSideSheet = new WebDriverWait(webDriver,Duration.ofSeconds(10))
-            .until(ExpectedConditions.visibilityOfElementLocated(By.id("attach-close_sideSheet-link")));
+    @FindBy(id="attach-close_sideSheet-link")
+    private WebElement closeSideSheet;
 
-    WebElement cartAmount = new WebDriverWait(webDriver, Duration.ofSeconds(10))
-            .until(ExpectedConditions.visibilityOfElementLocated(By.id("nav-cart-count")));
+    @FindBy(id="nav-cart-count")
+    private WebElement cartAmount;
 
+    @FindBy(id="nav-cart")
+    private WebElement cart;
+
+    @FindBy(xpath = "//input[@value='Delete']")
+    private WebElement cartDeleteButton;
+
+    @FindBy(id = "sc-subtotal-amount-activecart")
+    private  WebElement cartSubtotal;
 
     public ProductPage (WebDriver webDriver) {
         super (webDriver);
@@ -36,6 +46,8 @@ public class ProductPage extends BasePage {
     }
 
     public ProductPage closeSlideSheet () {
+        WebElement addedToCard = new WebDriverWait(webDriver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[@class='a-size-medium-plus a-color-base sw-atc-text a-text-bold']")));
         closeSideSheet.click();
         return this;
     }
@@ -44,4 +56,19 @@ public class ProductPage extends BasePage {
         return cartAmount.getText();
     }
 
+    public ProductPage cartClick () {
+        cart.click();
+        return this;
+    }
+
+    public ProductPage cartClear () {
+        cartDeleteButton.click();
+        return this;
+    }
+
+    public String getCartSubtotal () {
+        WebElement cartH1 = new WebDriverWait(webDriver,Duration.ofSeconds(10))
+                .until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//h1[@class='a-spacing-mini a-spacing-top-base']")));
+        return cartSubtotal.getText();
+    }
 }
