@@ -6,10 +6,11 @@ import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.Condition.*;
 
 public class SearchFieldTest {
+    String path = System.getProperty("user.dir");
 
     @Test
     public void incorrectInfo() {
-        System.setProperty("webdriver.chrome.driver", "C:\\Users\\y4ken\\Documents\\GitHub\\Epam-Selenium-Practice-Group-5\\src\\test\\resources\\webdriver\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", path+"\\resources\\webdriver\\chromedriver.exe");
 
         open("https://amazon.com");
 
@@ -22,7 +23,7 @@ public class SearchFieldTest {
 
     @Test
     public void correctInfo() {
-        System.setProperty("webdriver.chrome.driver", "C:\\Users\\y4ken\\Documents\\GitHub\\Epam-Selenium-Practice-Group-5\\src\\test\\resources\\webdriver\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", path+"\\resources\\webdriver\\chromedriver.exe");
 
         open("https://amazon.com");
 
@@ -35,7 +36,7 @@ public class SearchFieldTest {
 
     @Test
     public void checkResults() {
-        System.setProperty("webdriver.chrome.driver", "C:\\Users\\y4ken\\Documents\\GitHub\\Epam-Selenium-Practice-Group-5\\src\\test\\resources\\webdriver\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", path+"\\resources\\webdriver\\chromedriver.exe");
 
         open("https://amazon.com");
 
