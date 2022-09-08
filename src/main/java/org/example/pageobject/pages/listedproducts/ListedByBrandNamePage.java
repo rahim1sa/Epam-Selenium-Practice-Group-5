@@ -33,7 +33,5 @@ public class ListedByBrandNamePage extends BasePage {
     }
 
     // getting listed products
-    public List<WebElement> getList() {
-        return listElements;
-    }
+    public List<WebElement> getList() {return listElements; }
 }
