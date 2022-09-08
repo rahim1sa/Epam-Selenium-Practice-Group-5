@@ -11,15 +11,17 @@ public class HomePage extends BasePage {
     @FindBy(xpath = "//*[contains(@aria-label,\"Computers & Accessories\")]")
     private WebElement category;
 
-    public HomePage(WebDriver webDriver) {super(webDriver);}
+    public HomePage(WebDriver webDriver) {
+        super(webDriver);
+    }
 
-    public HomePage open(){
+    public HomePage open() {
         webDriver.get("https://www.amazon.com");
         return this;
     }
 
     // redirecting category page
-    public ListedByBrandNamePage clickCategory(){
+    public ListedByBrandNamePage clickCategory() {
         waitForVisibility(category).click();
         return new ListedByBrandNamePage(webDriver);
     }

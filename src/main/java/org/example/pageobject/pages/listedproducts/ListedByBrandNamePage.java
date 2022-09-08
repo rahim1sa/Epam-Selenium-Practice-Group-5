@@ -17,18 +17,23 @@ public class ListedByBrandNamePage extends BasePage {
     @FindBy(xpath = "//*[contains(@class,\"a-size-base-plus a-color-base a-text-normal\")]")
     private List<WebElement> listElements;
 
-    public ListedByBrandNamePage(WebDriver webDriver) {super(webDriver);}
+    public ListedByBrandNamePage(WebDriver webDriver) {
+        super(webDriver);
+    }
+
     // filter by brand
-    public ListedByBrandNamePage filterByBrand(){
+    public ListedByBrandNamePage filterByBrand() {
         filterByBrand.click();
         return this;
     }
+
     // getting brand title
-    public String getTitle(){
+    public String getTitle() {
         return waitForVisibility(titleBrand).getText();
     }
+
     // getting listed products
-    public List<WebElement> getList(){
+    public List<WebElement> getList() {
         return listElements;
     }
 }

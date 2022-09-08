@@ -4,6 +4,7 @@ import org.example.pageobject.BasePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+
 import java.util.List;
 
 public class ListedBySortedPage extends BasePage {
@@ -15,13 +16,17 @@ public class ListedBySortedPage extends BasePage {
     private WebElement sortLowToHigh;
     @FindBy(xpath = "//*[contains(@class,\"s-result-list\")]//*[contains(@class,\"a-price-whole\")]")
     public List<WebElement> sortedProducts;
-    public void filterByPrice(){
-          waitForVisibility(priceRange).click();
+
+    public void filterByPrice() {
+        waitForVisibility(priceRange).click();
     }
-    public void sort(){
+
+    public void sort() {
         waitForVisibility(popUpButton).click();
         waitForVisibility(sortLowToHigh).click();
     }
 
-    public ListedBySortedPage(WebDriver webDriver) {super(webDriver);}
+    public ListedBySortedPage(WebDriver webDriver) {
+        super(webDriver);
+    }
 }
